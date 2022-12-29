@@ -98,30 +98,83 @@ class Border(pygame.sprite.Sprite):
 class Brick(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__(main_group, all_sprites)
-        pic = load_image('bricks/s_blue.png')
-        pic = pygame.transform.scale(pic, (64, 32))
         self.lives = 1
-        self.image = pic
+        self.sprite()
         self.add(bouncy)
         self.add(bricks)
         self.rect = self.image.get_rect().move(x, y)
         self.vx = 0
         self.mask = pygame.mask.from_surface(self.image)
 
+    def sprite(self):
+        if self.lives > 0:
+            pic = load_image('bricks/s_blue.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+
+
     def update(self):
         if pygame.sprite.collide_mask(self, mball):
             print(pygame.sprite.collide_mask(mball, self))
-            if pygame.sprite.collide_mask(mball, self)[1] == 1:
+            if pygame.sprite.collide_mask(mball, self) == (5, 1):
                 mball.vy = -mball.vy
-            elif pygame.sprite.collide_mask(mball, self)[0] == 1:
+            elif pygame.sprite.collide_mask(mball, self) == (1, 5):
                 mball.vx = -mball.vx
             else:
                 mball.vy = -mball.vy
                 mball.vx = -mball.vx
             self.lives -= 1
+            self.sprite()
         if self.lives <= 0:
             self.kill()
             del self
+
+class Green(Brick):
+    def __init__(self, x, y):
+        super(Brick, self).__init__(main_group, all_sprites)
+        self.lives = 2
+        self.sprite()
+        self.add(bouncy)
+        self.add(bricks)
+        self.rect = self.image.get_rect().move(x, y)
+        self.vx = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def sprite(self):
+        if self.lives == 2:
+            pic = load_image('bricks/s_green.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 1:
+
+            pic = load_image('bricks/s_green_1.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+
+class Brown(Brick):
+    def __init__(self, x, y):
+        super(Brick, self).__init__(main_group, all_sprites)
+        self.lives = 3
+        self.sprite()
+        self.add(bouncy)
+        self.add(bricks)
+        self.rect = self.image.get_rect().move(x, y)
+        self.vx = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def sprite(self):
+        if self.lives == 3:
+            pic = load_image('bricks/s_brown.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 2:
+            pic = load_image('bricks/s_brown_1.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 1:
+            pic = load_image('bricks/s_brown_2.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
 
 
 
@@ -152,6 +205,38 @@ def level1():
     brick_seven_two = Brick(7 * 64, 2 * 32)
     brick_eight_two = Brick(8 * 64, 2 * 32)
 
+def level2():
+    brick_zero_zero = Brick(0, 0)
+    brick_one_zero = Brick(1 * 64, 0)
+    brick_two_zero = Brick(2 * 64, 0)
+    brick_three_zero = Brick(3 * 64, 0)
+    brick_four_zero = Brick(4 * 64, 0)
+    brick_five_zero = Brick(5 * 64, 0)
+    brick_six_zero = Brick(6 * 64, 0)
+    brick_seven_zero = Brick(7 * 64, 0)
+    brick_eight_zero = Brick(8 * 64, 0)
+    brick_nine_zero = Brick(9 * 64, 0)
+    brick_zero_one = Green(0, 1 * 32)
+    brick_one_one = Green(1 * 64, 1 * 32)
+    brick_two_one = Green(2 * 64, 1 * 32)
+    brick_three_one = Green(3 * 64, 1 * 32)
+    brick_four_one = Green(4 * 64, 1 * 32)
+    brick_five_one = Green(5 * 64, 1 * 32)
+    brick_six_one = Green(6 * 64, 1 * 32)
+    brick_seven_one = Green(7 * 64, 1 * 32)
+    brick_eight_one = Green(8 * 64, 1 * 32)
+    brick_nine_one = Green(9 * 64, 1 * 32)
+    brick_zero_two = Brown(0, 2 * 32)
+    brick_one_two = Brown(1 * 64, 2 * 32)
+    brick_two_two = Brown(2 * 64, 2 * 32)
+    brick_three_two = Brown(3 * 64, 2 * 32)
+    brick_four_two = Brown(4 * 64, 2 * 32)
+    brick_five_two = Brown(5 * 64, 2 * 32)
+    brick_six_two = Brown(6 * 64, 2 * 32)
+    brick_seven_two = Brown(7 * 64, 2 * 32)
+    brick_eight_two = Brown(8 * 64, 2 * 32)
+    brick_nine_two = Brown(9 * 64, 2 * 32)
+
 
 
 
@@ -177,7 +262,7 @@ if __name__ == '__main__':
     Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
     mball = Ball()
     plat = Platphorm()
-    level1()
+    level2()
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
