@@ -1,11 +1,14 @@
 import pygame
 import sys
 import os
-
+pygame.init()
 WIDTH, HEIGHT = 640, 480
 FPS = 60
 clock = pygame.time.Clock()
-
+count = 0
+counter, text = 10, '10'.rjust(3)
+pygame.time.set_timer(pygame.USEREVENT, 1000)
+font = pygame.font.SysFont('Consolas', 30)
 
 
 def load_image(name, colorkey=None):
@@ -32,6 +35,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(WIDTH / 2 - 16, HEIGHT / 4 - 16 + 32)
         self.vx = 0
         self.vy = 0
+        self.count = 1
 
     def update(self):
         if pygame.sprite.spritecollideany(self, horizontal_borders):
@@ -52,6 +56,9 @@ class Ball(pygame.sprite.Sprite):
     def change(self, vx, vy):
         self.vx = vx
         self.vy = vy
+
+    def pos(self):
+        self.rect = self.image.get_rect().move(WIDTH / 2 - 16, HEIGHT / 4 - 16 + 32)
 
 class Platphorm(pygame.sprite.Sprite):
     def __init__(self):
@@ -116,7 +123,7 @@ class Brick(pygame.sprite.Sprite):
     def update(self):
         if pygame.sprite.collide_mask(self, mball):
             print(pygame.sprite.collide_mask(mball, self))
-            if pygame.sprite.collide_mask(mball, self) == (5, 1):
+            if pygame.sprite.collide_mask(mball, self) == (5, 1) or pygame.sprite.collide_mask(mball, self) == (4, 2):
                 mball.vy = -mball.vy
             elif pygame.sprite.collide_mask(mball, self) == (1, 5):
                 mball.vx = -mball.vx
@@ -126,6 +133,7 @@ class Brick(pygame.sprite.Sprite):
             self.lives -= 1
             self.sprite()
         if self.lives <= 0:
+            mball.count -= 1
             self.kill()
             del self
 
@@ -146,7 +154,6 @@ class Green(Brick):
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 1:
-
             pic = load_image('bricks/s_green_1.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
@@ -177,6 +184,18 @@ class Brown(Brick):
             self.image = pic
 
 
+class Ready(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__(main_group, all_sprites)
+        self.image = load_image('zero.png')
+        self.add(ui)
+        self.status = 'Ready'
+        self.rect = self.image.get_rect().move(128, 128)
+
+    def end(self):
+        self.kill()
+        del self
+
 
 
 def level(num):
@@ -185,15 +204,20 @@ def level(num):
         level_map = [line.strip() for line in mapFile]
     max_width = max(map(len, level_map))
     level = list(map(lambda x: x.ljust(max_width, '.'), level_map))
+    c = 0
     for i in range(len(level)):
         for j in range(len(level[i])):
             print(level[i][j])
             if level[i][j] == '1':
                 Brick(int(j) * 64, int(i) * 32)
+                c += 1
             if level[i][j] == '2':
                 Green(int(j) * 64, int(i) * 32)
+                c += 1
             if level[i][j] == '3':
                 Brown(int(j) * 64, int(i) * 32)
+                c += 1
+    mball.count = c
 
 
 all_sprites = pygame.sprite.Group()
@@ -205,6 +229,7 @@ left_borders = pygame.sprite.Group()
 right_borders = pygame.sprite.Group()
 bouncy = pygame.sprite.Group()
 bricks = pygame.sprite.Group()
+ui = pygame.sprite.Group()
 
 
 if __name__ == '__main__':
@@ -218,17 +243,21 @@ if __name__ == '__main__':
     Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
     mball = Ball()
     plat = Platphorm()
-    level(2)
+    lvl = 1
+    level(lvl)
+    a = Ready()
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONUP and started is False:
+                a.end()
                 mball.change(5, 5)
                 started = True
             if event.type == pygame.KEYDOWN:
                 if started is False:
+                    a.end()
                     mball.change(5, 5)
                     started = True
                 if event.key == 1073741904:
@@ -237,11 +266,16 @@ if __name__ == '__main__':
                     plat.move('right')
             if event.type == pygame.KEYUP:
                 plat.move('stop')
-
-
-
+        if mball.count == 0:
+            mball.pos()
+            mball.change(0, 0)
+            started = False
+            lvl += 1
+            level(lvl)
         main_group.update()
         main_group.draw(screen)
+        ui.update()
+        ui.draw(screen)
         pygame.display.flip()
         screen.fill((0, 0, 0))
     pygame.quit()
