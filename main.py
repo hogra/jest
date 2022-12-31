@@ -179,65 +179,21 @@ class Brown(Brick):
 
 
 
-def level1():
-    brick_one_zero = Brick(1 * 64, 0)
-    brick_two_zero = Brick(2 * 64, 0)
-    brick_three_zero = Brick(3 * 64, 0)
-    brick_four_zero = Brick(4 * 64, 0)
-    brick_five_zero = Brick(5 * 64, 0)
-    brick_six_zero = Brick(6 * 64, 0)
-    brick_seven_zero = Brick(7 * 64, 0)
-    brick_eight_zero = Brick(8 * 64, 0)
-    brick_one_one = Brick(1 * 64, 1 * 32)
-    brick_two_one = Brick(2 * 64, 1 * 32)
-    brick_three_one = Brick(3 * 64, 1 * 32)
-    brick_four_one = Brick(4 * 64, 1 * 32)
-    brick_five_one = Brick(5 * 64, 1 * 32)
-    brick_six_one = Brick(6 * 64, 1 * 32)
-    brick_seven_one = Brick(7 * 64, 1 * 32)
-    brick_eight_one = Brick(8 * 64, 1 * 32)
-    brick_one_two = Brick(1 * 64, 2 * 32)
-    brick_two_two = Brick(2 * 64, 2 * 32)
-    brick_three_two = Brick(3 * 64, 2 * 32)
-    brick_four_two = Brick(4 * 64, 2 * 32)
-    brick_five_two = Brick(5 * 64, 2 * 32)
-    brick_six_two = Brick(6 * 64, 2 * 32)
-    brick_seven_two = Brick(7 * 64, 2 * 32)
-    brick_eight_two = Brick(8 * 64, 2 * 32)
-
-def level2():
-    brick_zero_zero = Brick(0, 0)
-    brick_one_zero = Brick(1 * 64, 0)
-    brick_two_zero = Brick(2 * 64, 0)
-    brick_three_zero = Brick(3 * 64, 0)
-    brick_four_zero = Brick(4 * 64, 0)
-    brick_five_zero = Brick(5 * 64, 0)
-    brick_six_zero = Brick(6 * 64, 0)
-    brick_seven_zero = Brick(7 * 64, 0)
-    brick_eight_zero = Brick(8 * 64, 0)
-    brick_nine_zero = Brick(9 * 64, 0)
-    brick_zero_one = Green(0, 1 * 32)
-    brick_one_one = Green(1 * 64, 1 * 32)
-    brick_two_one = Green(2 * 64, 1 * 32)
-    brick_three_one = Green(3 * 64, 1 * 32)
-    brick_four_one = Green(4 * 64, 1 * 32)
-    brick_five_one = Green(5 * 64, 1 * 32)
-    brick_six_one = Green(6 * 64, 1 * 32)
-    brick_seven_one = Green(7 * 64, 1 * 32)
-    brick_eight_one = Green(8 * 64, 1 * 32)
-    brick_nine_one = Green(9 * 64, 1 * 32)
-    brick_zero_two = Brown(0, 2 * 32)
-    brick_one_two = Brown(1 * 64, 2 * 32)
-    brick_two_two = Brown(2 * 64, 2 * 32)
-    brick_three_two = Brown(3 * 64, 2 * 32)
-    brick_four_two = Brown(4 * 64, 2 * 32)
-    brick_five_two = Brown(5 * 64, 2 * 32)
-    brick_six_two = Brown(6 * 64, 2 * 32)
-    brick_seven_two = Brown(7 * 64, 2 * 32)
-    brick_eight_two = Brown(8 * 64, 2 * 32)
-    brick_nine_two = Brown(9 * 64, 2 * 32)
-
-
+def level(num):
+    filename = "data/lvl" + str(num) + '.txt'
+    with open(filename, 'r') as mapFile:
+        level_map = [line.strip() for line in mapFile]
+    max_width = max(map(len, level_map))
+    level = list(map(lambda x: x.ljust(max_width, '.'), level_map))
+    for i in range(len(level)):
+        for j in range(len(level[i])):
+            print(level[i][j])
+            if level[i][j] == '1':
+                Brick(int(j) * 64, int(i) * 32)
+            if level[i][j] == '2':
+                Green(int(j) * 64, int(i) * 32)
+            if level[i][j] == '3':
+                Brown(int(j) * 64, int(i) * 32)
 
 
 all_sprites = pygame.sprite.Group()
@@ -262,7 +218,7 @@ if __name__ == '__main__':
     Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
     mball = Ball()
     plat = Platphorm()
-    level2()
+    level(2)
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():

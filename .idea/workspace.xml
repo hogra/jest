@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="added base">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="added brick types and remade bounce system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/lvl1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/lvl1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672242254069</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added brick types and remade bounce system">
+      <created>1672317081091</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1672317081092</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -99,6 +107,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added base" />
-    <option name="LAST_COMMIT_MESSAGE" value="added base" />
+    <MESSAGE value="added brick types and remade bounce system" />
+    <option name="LAST_COMMIT_MESSAGE" value="added brick types and remade bounce system" />
   </component>
 </project>
