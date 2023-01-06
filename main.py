@@ -1,6 +1,8 @@
-import pygame
-import sys
 import os
+import sys
+
+import pygame
+
 pygame.init()
 WIDTH, HEIGHT = 640, 480
 FPS = 60
@@ -19,9 +21,11 @@ def load_image(name, colorkey=None):
     image = pygame.image.load(fullname)
     return image
 
+
 def terminate():
     pygame.quit()
     sys.exit()
+
 
 ball_image = load_image('s_ball.png')
 platphorm_image = load_image('s_platphorm.png')
@@ -43,15 +47,19 @@ class Ball(pygame.sprite.Sprite):
         if pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx
         if pygame.sprite.collide_mask(self, plat):
-            if pygame.sprite.collide_mask(plat, self)[0] < 70:
-                if self.vx > 0:
-                    self.vx = -self.vx
-            if pygame.sprite.collide_mask(plat, self)[0] > 70:
+            if pygame.sprite.collide_mask(plat, self)[0] > pygame.sprite.collide_mask(plat, self)[1]:
+                if self.vx >= 0:
+                    self.vx = 5
                 if self.vx < 0:
-                    self.vx = -self.vx
-            self.vy = -self.vy
+                    self.vx = -5
+                self.vy = -5
+            if pygame.sprite.collide_mask(plat, self)[0] < pygame.sprite.collide_mask(plat, self)[1]:
+                if self.vx <= 40:
+                    self.vx = -10
+                else:
+                    self.vx = 10
+                self.vy = -2
         self.rect = self.rect.move(self.vx, self.vy)
-
 
     def change(self, vx, vy):
         self.vx = vx
@@ -59,6 +67,7 @@ class Ball(pygame.sprite.Sprite):
 
     def pos(self):
         self.rect = self.image.get_rect().move(WIDTH / 2 - 16, HEIGHT / 4 - 16 + 32)
+
 
 class Platphorm(pygame.sprite.Sprite):
     def __init__(self):
@@ -102,6 +111,7 @@ class Border(pygame.sprite.Sprite):
             self.image = pygame.Surface([x2 - x1, 1])
             self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
 
+
 class Brick(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__(main_group, all_sprites)
@@ -119,13 +129,12 @@ class Brick(pygame.sprite.Sprite):
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
-
     def update(self):
         if pygame.sprite.collide_mask(self, mball):
             print(pygame.sprite.collide_mask(mball, self))
-            if pygame.sprite.collide_mask(mball, self) == (5, 1) or pygame.sprite.collide_mask(mball, self) == (4, 2):
+            if pygame.sprite.collide_mask(mball, self)[0] > pygame.sprite.collide_mask(mball, self)[1]:
                 mball.vy = -mball.vy
-            elif pygame.sprite.collide_mask(mball, self) == (1, 5):
+            elif pygame.sprite.collide_mask(mball, self)[0] < pygame.sprite.collide_mask(mball, self)[1]:
                 mball.vx = -mball.vx
             else:
                 mball.vy = -mball.vy
@@ -136,6 +145,7 @@ class Brick(pygame.sprite.Sprite):
             mball.count -= 1
             self.kill()
             del self
+
 
 class Green(Brick):
     def __init__(self, x, y):
@@ -157,6 +167,7 @@ class Green(Brick):
             pic = load_image('bricks/s_green_1.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
+
 
 class Brown(Brick):
     def __init__(self, x, y):
@@ -197,7 +208,6 @@ class Ready(pygame.sprite.Sprite):
         del self
 
 
-
 def level(num):
     filename = "data/lvl" + str(num) + '.txt'
     with open(filename, 'r') as mapFile:
@@ -231,7 +241,6 @@ bouncy = pygame.sprite.Group()
 bricks = pygame.sprite.Group()
 ui = pygame.sprite.Group()
 
-
 if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -253,12 +262,12 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEBUTTONUP and started is False:
                 a.end()
-                mball.change(5, 5)
+                mball.change(0, 5)
                 started = True
             if event.type == pygame.KEYDOWN:
                 if started is False:
                     a.end()
-                    mball.change(5, 5)
+                    mball.change(0, 5)
                     started = True
                 if event.key == 1073741904:
                     plat.move('left')
