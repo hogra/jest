@@ -5,13 +5,16 @@ import pygame
 
 pygame.init()
 WIDTH, HEIGHT = 640, 480
-FPS = 60
+FPS = 30
 clock = pygame.time.Clock()
 count = 0
 counter, text = 10, '10'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
 font = pygame.font.SysFont('Consolas', 30)
-
+FRONT = [(5, 1), (0, 28), (59, 28), (62, 27), (0, 27)]
+SIDE = [(1, 5), (2, 11), (2, 4), (0, 10), (69, 3), (0, 10), (0, 14), (0, 5), (0, 23), (0, 22), (0, 27)]
+RIGHT = [(5, 13), (1, 8), (2, 4), (1, 9)]
+LEFT = [(9, 13), (13, 9), (14, 8), (1, 10)]
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -42,23 +45,30 @@ class Ball(pygame.sprite.Sprite):
         self.count = 1
 
     def update(self):
+        global started, lives
+        if pygame.sprite.collide_rect(self, death):
+            self.pos()
+            self.change(0, 0)
+            started = False
+            lives -= 1
         if pygame.sprite.spritecollideany(self, horizontal_borders):
             self.vy = -self.vy
         if pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx
         if pygame.sprite.collide_mask(self, plat):
-            if pygame.sprite.collide_mask(plat, self)[0] > pygame.sprite.collide_mask(plat, self)[1]:
+            print('Plat ' + str(pygame.sprite.collide_mask(self, plat)))
+            if pygame.sprite.collide_mask(self, plat) in RIGHT:
+                self.vx = 10
+                self.vy = -3
+            elif pygame.sprite.collide_mask(self, plat) in LEFT:
+                self.vx = -10
+                self.vy = -3
+            else:
                 if self.vx >= 0:
                     self.vx = 5
-                if self.vx < 0:
+                elif self.vx < 0:
                     self.vx = -5
                 self.vy = -5
-            if pygame.sprite.collide_mask(plat, self)[0] < pygame.sprite.collide_mask(plat, self)[1]:
-                if self.vx <= 40:
-                    self.vx = -10
-                else:
-                    self.vx = 10
-                self.vy = -2
         self.rect = self.rect.move(self.vx, self.vy)
 
     def change(self, vx, vy):
@@ -131,10 +141,10 @@ class Brick(pygame.sprite.Sprite):
 
     def update(self):
         if pygame.sprite.collide_mask(self, mball):
-            print(pygame.sprite.collide_mask(mball, self))
-            if pygame.sprite.collide_mask(mball, self)[0] > pygame.sprite.collide_mask(mball, self)[1]:
+            print('Brick ' + str(pygame.sprite.collide_mask(self, mball)))
+            if pygame.sprite.collide_mask(mball, self) in FRONT:
                 mball.vy = -mball.vy
-            elif pygame.sprite.collide_mask(mball, self)[0] < pygame.sprite.collide_mask(mball, self)[1]:
+            elif pygame.sprite.collide_mask(mball, self) in SIDE:
                 mball.vx = -mball.vx
             else:
                 mball.vy = -mball.vy
@@ -246,8 +256,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     running = True
     started = False
+    lives = 3
     Border(5, 5, WIDTH - 5, 5)
-    Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
+    death = Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
     Border(5, 5, 5, HEIGHT - 5)
     Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
     mball = Ball()
