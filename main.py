@@ -5,16 +5,18 @@ import pygame
 
 pygame.init()
 WIDTH, HEIGHT = 640, 480
-FPS = 30
+FPS = 60
 clock = pygame.time.Clock()
 count = 0
 counter, text = 10, '10'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
 font = pygame.font.SysFont('Consolas', 30)
-FRONT = [(5, 1), (0, 28), (59, 28), (62, 27), (0, 27)]
-SIDE = [(1, 5), (2, 11), (2, 4), (0, 10), (69, 3), (0, 10), (0, 14), (0, 5), (0, 23), (0, 22), (0, 27)]
+FRONT = [(5, 1), (0, 28), (59, 28), (62, 27), (0, 27), (0, 31)]
+SIDE = [(1, 5), (2, 11), (2, 4), (0, 10), (69, 3), (0, 10), (0, 14), (0, 5), (0, 23), (0, 22), (0, 27), (0, 15)]
 RIGHT = [(5, 13), (1, 8), (2, 4), (1, 9)]
 LEFT = [(9, 13), (13, 9), (14, 8), (1, 10)]
+
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -51,6 +53,7 @@ class Ball(pygame.sprite.Sprite):
             self.change(0, 0)
             started = False
             lives -= 1
+            print(lives)
         if pygame.sprite.spritecollideany(self, horizontal_borders):
             self.vy = -self.vy
         if pygame.sprite.spritecollideany(self, vertical_borders):
@@ -227,7 +230,6 @@ def level(num):
     c = 0
     for i in range(len(level)):
         for j in range(len(level[i])):
-            print(level[i][j])
             if level[i][j] == '1':
                 Brick(int(j) * 64, int(i) * 32)
                 c += 1
@@ -250,33 +252,48 @@ right_borders = pygame.sprite.Group()
 bouncy = pygame.sprite.Group()
 bricks = pygame.sprite.Group()
 ui = pygame.sprite.Group()
+for sprite in main_group:
+    sprite.kill()
+mball = Ball()
+death = Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+ended = False
+lives = 3
+print(lives)
+Border(5, 5, WIDTH - 5, 5)
+Border(5, 5, 5, HEIGHT - 5)
+Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
+plat = Platphorm()
+a = Ready()
+started = False
+running = True
+started = False
+lvl = 1
+level(lvl)
+first = True
 
-if __name__ == '__main__':
+def begin():
+    print(all_sprites)
+
+
+def play():
+    global started, lives, running, lvl, mball, a, plat, first
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    running = True
-    started = False
-    lives = 3
-    Border(5, 5, WIDTH - 5, 5)
-    death = Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
-    Border(5, 5, 5, HEIGHT - 5)
-    Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
-    mball = Ball()
-    plat = Platphorm()
-    lvl = 1
-    level(lvl)
-    a = Ready()
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONUP and started is False:
+                if lives == 3:
+                    first = False
                 a.end()
                 mball.change(0, 5)
                 started = True
             if event.type == pygame.KEYDOWN:
                 if started is False:
+                    if lives == 3:
+                        first = False
                     a.end()
                     mball.change(0, 5)
                     started = True
@@ -284,6 +301,11 @@ if __name__ == '__main__':
                     plat.move('left')
                 if event.key == 1073741903:
                     plat.move('right')
+                if event.key == pygame.K_m:
+                    for sprite in bricks:
+                        sprite.kill()
+                    lvl = lvl + 1
+                    level(lvl)
             if event.type == pygame.KEYUP:
                 plat.move('stop')
         if mball.count == 0:
@@ -292,6 +314,32 @@ if __name__ == '__main__':
             started = False
             lvl += 1
             level(lvl)
+        if lives == 0:
+            all_sprites.empty()
+            begin()
+            lives = 3
+            first = True
+            return True
+        if first:
+            for sprite in main_group:
+                sprite.kill()
+            mball = Ball()
+            death = Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
+            screen = pygame.display.set_mode((WIDTH, HEIGHT))
+            ended = False
+            lives = 3
+            print(lives)
+            Border(5, 5, WIDTH - 5, 5)
+            Border(5, 5, 5, HEIGHT - 5)
+            Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
+            plat = Platphorm()
+            a = Ready()
+            started = False
+            running = True
+            started = False
+            lvl = 1
+            level(lvl)
+            first = True
         main_group.update()
         main_group.draw(screen)
         ui.update()
