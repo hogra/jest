@@ -79,7 +79,7 @@ class Ball(pygame.sprite.Sprite):
         self.vy = vy
 
     def pos(self):
-        self.rect = self.image.get_rect().move(WIDTH / 2 - 16, HEIGHT / 4 - 16 + 32)
+        self.rect = self.image.get_rect().move(WIDTH / 2 - 16, HEIGHT / 4 - 16 + 128)
 
 
 class Platphorm(pygame.sprite.Sprite):
@@ -207,6 +207,34 @@ class Brown(Brick):
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
+class Purple(Brick):
+    def __init__(self, x, y):
+        super(Brick, self).__init__(main_group, all_sprites)
+        self.lives = 4
+        self.sprite()
+        self.add(bouncy)
+        self.add(bricks)
+        self.rect = self.image.get_rect().move(x, y)
+        self.vx = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def sprite(self):
+        if self.lives == 4:
+            pic = load_image('bricks/s_purple.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 3:
+            pic = load_image('bricks/s_purple_1.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 2:
+            pic = load_image('bricks/s_purple_2.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
+        elif self.lives == 1:
+            pic = load_image('bricks/s_purple_3.png')
+            pic = pygame.transform.scale(pic, (64, 32))
+            self.image = pic
 
 class Ready(pygame.sprite.Sprite):
     def __init__(self):
@@ -238,6 +266,9 @@ def level(num):
                 c += 1
             if level[i][j] == '3':
                 Brown(int(j) * 64, int(i) * 32)
+                c += 1
+            if level[i][j] == '4':
+                Purple(int(j) * 64, int(i) * 32)
                 c += 1
     mball.count = c
 
@@ -333,7 +364,6 @@ def play():
             Border(5, 5, 5, HEIGHT - 5)
             Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
             plat = Platphorm()
-            a = Ready()
             started = False
             running = True
             started = False
