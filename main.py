@@ -2,6 +2,7 @@ import os
 import sys
 
 import pygame
+import datetime
 
 pygame.init()
 WIDTH, HEIGHT = 640, 480
@@ -15,8 +16,6 @@ FRONT = [(5, 1), (0, 28), (59, 28), (62, 27), (0, 27), (0, 31)]
 SIDE = [(1, 5), (2, 11), (2, 4), (0, 10), (69, 3), (0, 10), (0, 14), (0, 5), (0, 23), (0, 22), (0, 27), (0, 15)]
 RIGHT = [(5, 13), (1, 8), (2, 4), (1, 9)]
 LEFT = [(9, 13), (13, 9), (14, 8), (1, 10)]
-
-
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -47,8 +46,10 @@ class Ball(pygame.sprite.Sprite):
         self.count = 1
 
     def update(self):
-        global started, lives
+        global started, lives, score
         if pygame.sprite.collide_rect(self, death):
+            if score >= 500:
+                score -= 500
             self.pos()
             self.change(0, 0)
             started = False
@@ -59,6 +60,8 @@ class Ball(pygame.sprite.Sprite):
         if pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx
         if pygame.sprite.collide_mask(self, plat):
+            if score >= 10:
+                score -= 10
             print('Plat ' + str(pygame.sprite.collide_mask(self, plat)))
             if pygame.sprite.collide_mask(self, plat) in RIGHT:
                 self.vx = 10
@@ -143,6 +146,7 @@ class Brick(pygame.sprite.Sprite):
             self.image = pic
 
     def update(self):
+        global score
         if pygame.sprite.collide_mask(self, mball):
             print('Brick ' + str(pygame.sprite.collide_mask(self, mball)))
             if pygame.sprite.collide_mask(mball, self) in FRONT:
@@ -153,9 +157,11 @@ class Brick(pygame.sprite.Sprite):
                 mball.vy = -mball.vy
                 mball.vx = -mball.vx
             self.lives -= 1
+            score += 100
             self.sprite()
         if self.lives <= 0:
             mball.count -= 1
+            score += 100
             self.kill()
             del self
 
@@ -207,6 +213,7 @@ class Brown(Brick):
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
+
 class Purple(Brick):
     def __init__(self, x, y):
         super(Brick, self).__init__(main_group, all_sprites)
@@ -235,6 +242,7 @@ class Purple(Brick):
             pic = load_image('bricks/s_purple_3.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
+
 
 class Ready(pygame.sprite.Sprite):
     def __init__(self):
@@ -272,6 +280,24 @@ def level(num):
                 c += 1
     mball.count = c
 
+class Gui(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__(ui, all_sprites)
+        self.x_pos = 320
+        self.y_pos = 240
+        self.font = pygame.font.Font("assets/font.ttf", 60)
+        self.base_color, self.hovering_color = (255, 255, 255), (0, 0, 0)
+        self.text_input = str(score)
+        self.text = self.font.render(self.text_input, True, self.base_color)
+        self.image = self.text
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+
+    def update(self):
+        self.text_input = str(score)
+        self.text = self.font.render(self.text_input, True, self.base_color)
+        self.image = self.text
+        screen.blit(self.text, self.text_rect)
 
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
@@ -296,6 +322,8 @@ Border(5, 5, 5, HEIGHT - 5)
 Border(WIDTH - 5, 5, WIDTH - 5, HEIGHT - 5)
 plat = Platphorm()
 a = Ready()
+score = 0
+txt = Gui()
 started = False
 running = True
 started = False
@@ -303,11 +331,16 @@ lvl = 1
 level(lvl)
 first = True
 
+
+
+
+
 def begin():
     print(all_sprites)
 
 
 def play():
+    global score
     global started, lives, running, lvl, mball, a, plat, first
     pygame.init()
     while running:
@@ -349,10 +382,13 @@ def play():
             all_sprites.empty()
             begin()
             lives = 3
+            score = 0
             first = True
             return True
         if first:
             for sprite in main_group:
+                sprite.kill()
+            for sprite in ui:
                 sprite.kill()
             mball = Ball()
             death = Border(5, HEIGHT - 5, WIDTH - 5, HEIGHT - 5)
@@ -367,13 +403,15 @@ def play():
             started = False
             running = True
             started = False
+            score = 0
+            txt = Gui()
             lvl = 1
             level(lvl)
             first = True
-        main_group.update()
-        main_group.draw(screen)
         ui.update()
         ui.draw(screen)
+        main_group.update()
+        main_group.draw(screen)
         pygame.display.flip()
         screen.fill((0, 0, 0))
     pygame.quit()

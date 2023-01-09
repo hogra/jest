@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="добавил главное меню, экран game over, игра приобрела смысл">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="Изменил меню, сделал новый тип кирпичей, два новых уровня">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/zero.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/zero.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673178682625</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Изменил меню, сделал новый тип кирпичей, два новых уровня">
+      <created>1673183441333</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1673183441333</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -221,6 +227,7 @@
     <MESSAGE value="added some weird thing" />
     <MESSAGE value="изменил столкновения, добавил падение мяча, жизни, устал писать по-английски" />
     <MESSAGE value="добавил главное меню, экран game over, игра приобрела смысл" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавил главное меню, экран game over, игра приобрела смысл" />
+    <MESSAGE value="Изменил меню, сделал новый тип кирпичей, два новых уровня" />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменил меню, сделал новый тип кирпичей, два новых уровня" />
   </component>
 </project>
