@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="Изменил меню, сделал новый тип кирпичей, два новых уровня">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="добавил счет">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673183441333</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="добавил счет">
+      <created>1673274431259</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1673274431259</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,6 +236,7 @@
     <MESSAGE value="изменил столкновения, добавил падение мяча, жизни, устал писать по-английски" />
     <MESSAGE value="добавил главное меню, экран game over, игра приобрела смысл" />
     <MESSAGE value="Изменил меню, сделал новый тип кирпичей, два новых уровня" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменил меню, сделал новый тип кирпичей, два новых уровня" />
+    <MESSAGE value="добавил счет" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавил счет" />
   </component>
 </project>

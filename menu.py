@@ -19,11 +19,20 @@ def play():
     if main.play():
         gameover()
 
+def tab():
+    l1 = list()
+    f = open("data/score.txt", encoding="utf8")
+    for number, line in enumerate(f):
+        l1.append(line)
+
+    return l1
+
 def gameover():
     while True:
         SCREEN.blit(BG, (0, 0))
 
         GO_POS = pygame.mouse.get_pos()
+        print(tab())
 
         GO_TEXT = get_font(40).render("GAME OVER", True, "#b68f40")
         GO_RECT = GO_TEXT.get_rect(center=(320, 100))
@@ -34,7 +43,6 @@ def gameover():
                             text_input="Menu", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
 
         SCREEN.blit(GO_TEXT, GO_RECT)
-
         for button in [AGAIN_BUTTON, TOMENU_BUTTON]:
             button.changeColor(GO_POS)
             button.update(SCREEN)

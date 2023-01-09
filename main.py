@@ -299,6 +299,12 @@ class Gui(pygame.sprite.Sprite):
         self.image = self.text
         screen.blit(self.text, self.text_rect)
 
+def writescore(n):
+    f = open('data/score.txt', 'a')
+    print(str(datetime.datetime.now().date()))
+    f.write('\n' + str(datetime.datetime.now().date()) + ': ' + str(n))
+
+
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
 main_group = pygame.sprite.Group()
@@ -382,6 +388,7 @@ def play():
             all_sprites.empty()
             begin()
             lives = 3
+            writescore(score)
             score = 0
             first = True
             return True
