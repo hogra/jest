@@ -6,7 +6,7 @@ import datetime
 
 pygame.init()
 WIDTH, HEIGHT = 640, 480
-FPS = 60
+FPS = 45
 clock = pygame.time.Clock()
 count = 0
 counter, text = 10, '10'.rjust(3)
@@ -14,8 +14,8 @@ pygame.time.set_timer(pygame.USEREVENT, 1000)
 font = pygame.font.SysFont('Consolas', 30)
 FRONT = [(5, 1), (0, 28), (59, 28), (62, 27), (0, 27), (0, 31)]
 SIDE = [(1, 5), (2, 11), (2, 4), (0, 10), (69, 3), (0, 10), (0, 14), (0, 5), (0, 23), (0, 22), (0, 27), (0, 15)]
-RIGHT = [(5, 13), (1, 8), (2, 4), (1, 9)]
-LEFT = [(9, 13), (13, 9), (14, 8), (1, 10)]
+RIGHT = [(1, 8), (1, 7), (1, 10)]
+LEFT = [(9, 13), (9, 12)]
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -63,12 +63,13 @@ class Ball(pygame.sprite.Sprite):
             if score >= 10:
                 score -= 10
             print('Plat ' + str(pygame.sprite.collide_mask(self, plat)))
-            if pygame.sprite.collide_mask(self, plat) in RIGHT:
-                self.vx = 10
-                self.vy = -3
-            elif pygame.sprite.collide_mask(self, plat) in LEFT:
-                self.vx = -10
-                self.vy = -3
+            if pygame.sprite.collide_mask(self, plat)[1] not in [14, 13, 12]:
+                if pygame.sprite.collide_mask(self, plat)[0] == 1:
+                    self.vx = 10
+                    self.vy = -3
+                elif pygame.sprite.collide_mask(self, plat)[1] == 1 or pygame.sprite.collide_mask(self, plat)[0] == 9:
+                    self.vx = -10
+                    self.vy = -3
             else:
                 if self.vx >= 0:
                     self.vx = 5
@@ -149,9 +150,12 @@ class Brick(pygame.sprite.Sprite):
         global score
         if pygame.sprite.collide_mask(self, mball):
             print('Brick ' + str(pygame.sprite.collide_mask(self, mball)))
-            if pygame.sprite.collide_mask(mball, self) in FRONT:
+            if pygame.sprite.collide_mask(mball, self)[0] == 0 or pygame.sprite.collide_mask(mball, self)[0] == 0:
                 mball.vy = -mball.vy
-            elif pygame.sprite.collide_mask(mball, self) in SIDE:
+                mball.vx = -mball.vx
+            elif pygame.sprite.collide_mask(mball, self)[0] > pygame.sprite.collide_mask(mball, self)[1]:
+                mball.vy = -mball.vy
+            elif pygame.sprite.collide_mask(mball, self)[1] > pygame.sprite.collide_mask(mball, self)[0]:
                 mball.vx = -mball.vx
             else:
                 mball.vy = -mball.vy
@@ -291,13 +295,19 @@ class Gui(pygame.sprite.Sprite):
         self.text = self.font.render(self.text_input, True, self.base_color)
         self.image = self.text
         self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
-        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_rect = self.text.get_rect(center=(40, 460))
+        self.lives = str(lives)
+        self.lind = self.font.render(self.lives, True, self.base_color)
+        self.lind_rect = self.lind.get_rect(center=(600, 460))
 
     def update(self):
         self.text_input = str(score)
+        self.lives = str(lives)
         self.text = self.font.render(self.text_input, True, self.base_color)
+        self.lind = self.font.render(self.lives, True, self.base_color)
         self.image = self.text
         screen.blit(self.text, self.text_rect)
+        screen.blit(self.lind, self.lind_rect)
 
 def writescore(n):
     f = open('data/score.txt', 'a')
@@ -422,3 +432,5 @@ def play():
         pygame.display.flip()
         screen.fill((0, 0, 0))
     pygame.quit()
+
+play()
