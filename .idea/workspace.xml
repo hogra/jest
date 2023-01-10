@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="переделал столкновения, добавил индикатор жизней">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="разделил программу на модули">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/score.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Options Rect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Quit Rect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/lil rect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/Play Rect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_brown.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_brown_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_brown_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_green_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_purple.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_purple_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_purple_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bricks/s_purple_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/lvl1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/lvl2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/lvl3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/lvl4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/one.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/s_ball.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/s_platphorm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/score.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/three.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/two.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/zero.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,7 +268,21 @@
       <option name="project" value="LOCAL" />
       <updated>1673356641660</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="прокомментировал код">
+      <created>1673361979594</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1673361979594</updated>
+    </task>
+    <task id="LOCAL-00016" summary="разделил программу на модули">
+      <created>1673362307761</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1673362307761</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -269,6 +308,8 @@
     <MESSAGE value="вообще ниче не сделал" />
     <MESSAGE value="добавил хайскор" />
     <MESSAGE value="переделал столкновения, добавил индикатор жизней" />
-    <option name="LAST_COMMIT_MESSAGE" value="переделал столкновения, добавил индикатор жизней" />
+    <MESSAGE value="прокомментировал код" />
+    <MESSAGE value="разделил программу на модули" />
+    <option name="LAST_COMMIT_MESSAGE" value="разделил программу на модули" />
   </component>
 </project>

@@ -2,13 +2,14 @@ import pygame
 import sys
 from button import Button
 import game
+from tools import load_image
 
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("ARKANOID") # когда игрок открывает игру, он попадает в главное меню
 
-bg = pygame.image.load("assets/Background.png")
+bg = load_image('sprites/Background.png')
 # изначально я хотел поставить на фон всей игры картинку космоса, но он сильно отвлекал от игры и я закрасил его в черный
 
 
@@ -22,7 +23,7 @@ def play(): # функция запускает игру
 
 def tab(): # функция создает текст таблицы рекордов
     l1 = list()
-    f = open("data/score.txt", encoding="utf8")
+    f = open("data/levels/score.txt", encoding="utf8")
     for number, line in enumerate(f):
         l1.append(line)
     l1.sort(key=lambda x: int(x.split(' ')[1]), reverse=True) # всё содержимое score.txt сортируется по убыванию счета
@@ -37,10 +38,10 @@ def gameover(): # экран game over
         go_text = get_font(30).render("GAME OVER", True, "#b68f40") # текст game over
         go_rect = go_text.get_rect(center=(150, 150))
 
-        again_button = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 250),
+        again_button = Button(image=load_image("sprites/lil Rect.png"), pos=(150, 250),
                             text_input="Again", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка again
-        tomenu_button = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 350),
+        tomenu_button = Button(image=load_image("sprites/lil Rect.png"), pos=(150, 350),
                             text_input="Menu", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка menu
         screen.blit(go_text, go_rect)
@@ -72,10 +73,10 @@ def main_menu(): # экран главного меню
         menu_pos = pygame.mouse.get_pos()
         menu_text = get_font(60).render("ARKANOID", True, "#b68f40") # заглавный текст
         menu_rect = menu_text.get_rect(center=(320, 100))
-        play_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 220),
+        play_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 220),
                             text_input="PLAY", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка play
-        quit_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 370),
+        quit_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 370),
                             text_input="QUIT", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка quit
         screen.blit(menu_text, menu_rect)

@@ -9,8 +9,8 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont('Consolas', 30)
 
 # загружаю основные спрайты - мячика и платформы
-ball_image = load_image('s_ball.png')
-platphorm_image = load_image('s_platphorm.png')
+ball_image = load_image('sprites/s_ball.png')
+platphorm_image = load_image('sprites/s_platphorm.png')
 
 
 class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
@@ -124,7 +124,7 @@ class Brick(pygame.sprite.Sprite):  # класс кирпичей
 
     def sprite(self):  # спрайт кирпича зависит от количества его жизней, но пока, что спрайт только один
         if self.lives > 0:
-            pic = load_image('bricks/s_blue.png')
+            pic = load_image('sprites/s_blue.png')
             pic = pygame.transform.scale(pic, (64, 32))  # размер всех кирпичей - 64x32
             self.image = pic
 
@@ -169,11 +169,11 @@ class Green(Brick):  # есть кирпич попрочнее
 
     def sprite(self):
         if self.lives == 2:  # в зависимости от количества жизней меняется спрайт
-            pic = load_image('bricks/s_green.png')
+            pic = load_image('sprites/s_green.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 1:  # если в кирпич попали, он трескается
-            pic = load_image('bricks/s_green_1.png')
+            pic = load_image('sprites/s_green_1.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
@@ -191,15 +191,15 @@ class Brown(Brick):  # коричнивые кирпичи
 
     def sprite(self):
         if self.lives == 3:
-            pic = load_image('bricks/s_brown.png')
+            pic = load_image('sprites/s_brown.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 2:
-            pic = load_image('bricks/s_brown_1.png')
+            pic = load_image('sprites/s_brown_1.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 1:
-            pic = load_image('bricks/s_brown_2.png')  # попав в него два раза он трескается сильнее
+            pic = load_image('sprites/s_brown_2.png')  # попав в него два раза он трескается сильнее
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
@@ -217,25 +217,25 @@ class Purple(Brick):  # фиолетовые кирпичи - самые про�
 
     def sprite(self):
         if self.lives == 4:
-            pic = load_image('bricks/s_purple.png')
+            pic = load_image('sprites/s_purple.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 3:
-            pic = load_image('bricks/s_purple_1.png')
+            pic = load_image('sprites/s_purple_1.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 2:
-            pic = load_image('bricks/s_purple_2.png')
+            pic = load_image('sprites/s_purple_2.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
         elif self.lives == 1:
-            pic = load_image('bricks/s_purple_3.png')
+            pic = load_image('sprites/s_purple_3.png')
             pic = pygame.transform.scale(pic, (64, 32))
             self.image = pic
 
 
 def level(num):  # функция загрузки уровня
-    filename = "data/lvl" + str(num) + '.txt'
+    filename = "data/levels/lvl" + str(num) + '.txt'
     # карты всех уровней - файлы txt, в которых указано положение и типов кирпичей
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
