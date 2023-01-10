@@ -29,8 +29,8 @@ class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
     def update(self):
         global started, lives, score
         if pygame.sprite.collide_rect(self, death):  # если падает вниз,
-            if score >= 500:
-                score -= 500  # игрок теряет 500 очков
+            if score >= 500 // difficulty:
+                score -= int(500 // difficulty)  # игрок теряет 500 очков
             self.pos()  # мячик возвращается в начальную позицию
             self.change(0, 0)  # становится неподвижным
             started = False  # ждет действий от игрока
@@ -40,21 +40,21 @@ class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
         if pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx  # если с вертикальной, соответственно, по x
         if pygame.sprite.collide_mask(self, plat):  # если сталкивается с платформой
-            if score >= 10:
-                score -= 10  # игрок теряет 10 очков
+            if score >= 10 // difficulty:
+                score -= int(10 // difficulty)  # игрок теряет 10 очков
             print('Plat ' + str(pygame.sprite.collide_mask(self, plat)))
             if pygame.sprite.collide_mask(self, plat)[1] not in [14, 13, 12]:  # если сяч попал не в центр
                 if pygame.sprite.collide_mask(self, plat)[0] == 1:  # а в правый край
-                    self.vx = 10  # он увеличивает скорость по x
-                    self.vy = -3  # и уменьшает по y
+                    self.vx = 10 * difficulty  # он увеличивает скорость по x
+                    self.vy = -3 * difficulty  # и уменьшает по y
                 elif pygame.sprite.collide_mask(self, plat)[1] == 1 or pygame.sprite.collide_mask(self, plat)[0] == 9:
-                    self.vx = -10  # если в левый край, то же, но в другую сторону
-                    self.vy = -3
+                    self.vx = -10 * difficulty  # если в левый край, то же, но в другую сторону
+                    self.vy = -3 * difficulty
             else:  # если все-таки в центр,
                 if self.vx >= 0:  # возвращает скорость по x
-                    self.vx = 5
+                    self.vx = 5 * difficulty
                 elif self.vx < 0:
-                    self.vx = -5
+                    self.vx = -5 * difficulty
                 self.vy = -5  # и y к обычной
         self.rect = self.rect.move(self.vx, self.vy)  # и мячик движется по x и y
 
@@ -147,11 +147,11 @@ class Brick(pygame.sprite.Sprite):  # класс кирпичей
                 mball.vy = -mball.vy
                 mball.vx = -mball.vx
             self.lives -= 1  # при столкновении с мячом, кирпич теряет жизнь
-            score += 100  # игрок получает 100 очков
+            score += int(100 * difficulty)  # игрок получает 100 очков
             self.sprite()  # и кирпич меняет спрайт
         if self.lives <= 0:  # если же жизней не осталось
             mball.count -= 1  # мяч получает один кирпич в свой счет
-            score += 100  # игрок получает дополнительно 100 очков
+            score += int(100 * difficulty)  # игрок получает дополнительно 100 очков
             self.kill()  # кирпич уничтожется
             del self  # и его объект удаляется (все равно, они одноразовые)
 
@@ -319,9 +319,10 @@ level(lvl)  # загшрузка уровня
 first = True  # флаг указывает, что это первая игра
 
 
-def play():  # собственно вся игра
-    global score, screen
+def play(k): # собственно вся игра
+    global score, screen, difficulty
     global started, lives, running, lvl, mball, plat, first
+    difficulty = k
     first = True
     pygame.init()
     while running:  # в цикле
@@ -333,13 +334,13 @@ def play():  # собственно вся игра
                 # при нажатии мыши мячик начинает падать
                 if lives == 3:  # если жизней 3, то игра считается первой
                     first = False  # но уже не считается
-                mball.change(0, 5)  # мячик падает вертикально вниз
+                mball.change(0, 5 * k)  # мячик падает вертикально вниз
                 started = True  # игра началась
             if event.type == pygame.KEYDOWN:
                 if started is False:  # то же самое, если была нажата какая-нибудь клавиша
                     if lives == 3:
                         first = False
-                    mball.change(0, 5)
+                    mball.change(0, 5 * k)
                     started = True
                 if event.key == 1073741904:  # движение на стрелочках
                     plat.move('left')  # влево

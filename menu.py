@@ -11,14 +11,15 @@ pygame.display.set_caption("ARKANOID") # когда игрок открывае�
 
 bg = load_image('sprites/Background.png')
 # изначально я хотел поставить на фон всей игры картинку космоса, но он сильно отвлекал от игры и я закрасил его в черный
-
+dif = 1
 
 
 def get_font(size): # функция берет нужный шрифт (он всего один) и нужный размер
     return pygame.font.Font("assets/font.ttf", size)
 
 def play(): # функция запускает игру
-    if game.play(): # если игра закончилась
+    global dif
+    if game.play(dif): # если игра закончилась
         gameover() # выводится экран gameover
 
 def tab(): # функция создает текст таблицы рекордов
@@ -68,19 +69,29 @@ def gameover(): # экран game over
         pygame.display.update()
 
 def main_menu(): # экран главного меню
+    global dif
     while True:
         screen.blit(bg, (0, 0))
         menu_pos = pygame.mouse.get_pos()
         menu_text = get_font(60).render("ARKANOID", True, "#b68f40") # заглавный текст
         menu_rect = menu_text.get_rect(center=(320, 100))
-        play_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 220),
+        play_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 210),
                             text_input="PLAY", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка play
-        quit_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 370),
+        quit_button = Button(image=load_image("sprites/Play Rect.png"), pos=(320, 360),
                             text_input="QUIT", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         # кнопка quit
+        dif_text = get_font(20).render("difficulty:", True, "#b68f40")
+        dif_rect = dif_text.get_rect(center=(120, 455))
         screen.blit(menu_text, menu_rect)
-        for button in [play_button, quit_button]:
+        screen.blit(dif_text, dif_rect)
+        one = Button(image=load_image("sprites/one.png"), pos=(260, 450),
+                            text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        two = Button(image=load_image("sprites/two.png"), pos=(320, 450),
+                            text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        three = Button(image=load_image("sprites/three.png"), pos=(380, 450),
+                            text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        for button in [play_button, quit_button, one, two, three]:
             button.update(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -92,6 +103,12 @@ def main_menu(): # экран главного меню
                 if quit_button.checkForInput(menu_pos): # при нажаьтии на quit, программа завершается
                     pygame.quit()
                     sys.exit()
+                if one.checkForInput(menu_pos):
+                    dif = 0.75
+                if two.checkForInput(menu_pos):
+                    dif = 1
+                if three.checkForInput(menu_pos):
+                    dif = 1.5
         pygame.display.update()
 
 main_menu()
