@@ -1,7 +1,7 @@
 import pygame
 import sys
 from button import Button
-import main
+import game
 
 pygame.init()
 
@@ -17,7 +17,7 @@ def get_font(size): # функция берет нужный шрифт (он в
     return pygame.font.Font("assets/font.ttf", size)
 
 def play(): # функция запускает игру
-    if main.play(): # если игра закончилась
+    if game.play(): # если игра закончилась
         gameover() # выводится экран gameover
 
 def tab(): # функция создает текст таблицы рекордов
