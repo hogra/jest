@@ -5,96 +5,92 @@ import main
 
 pygame.init()
 
-SCREEN = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("Menu")
+screen = pygame.display.set_mode((640, 480))
+pygame.display.set_caption("ARKANOID") # когда игрок открывает игру, он попадает в главное меню
 
-BG = pygame.image.load("assets/Background.png")
+bg = pygame.image.load("assets/Background.png")
+# изначально я хотел поставить на фон всей игры картинку космоса, но он сильно отвлекал от игры и я закрасил его в черный
 
 
 
-def get_font(size): # Returns Press-Start-2P in the desired size
+def get_font(size): # функция берет нужный шрифт (он всего один) и нужный размер
     return pygame.font.Font("assets/font.ttf", size)
 
-def play():
-    if main.play():
-        gameover()
+def play(): # функция запускает игру
+    if main.play(): # если игра закончилась
+        gameover() # выводится экран gameover
 
-def tab():
+def tab(): # функция создает текст таблицы рекордов
     l1 = list()
     f = open("data/score.txt", encoding="utf8")
     for number, line in enumerate(f):
         l1.append(line)
-    l1.sort(key=lambda x: int(x.split(' ')[1]), reverse=True)
-    l1 = list(map(lambda x: x.replace('\n', ''), l1))
+    l1.sort(key=lambda x: int(x.split(' ')[1]), reverse=True) # всё содержимое score.txt сортируется по убыванию счета
+    l1 = list(map(lambda x: x.replace('\n', ''), l1)) # и убирается все переносы строки
     return l1[:10]
 
-def gameover():
+def gameover(): # экран game over
     while True:
-        SCREEN.blit(BG, (0, 0))
-        GO_POS = pygame.mouse.get_pos()
+        screen.blit(bg, (0, 0))
+        go_pos = pygame.mouse.get_pos()
+        # на каждом экране (их всего два) считываются свои координаты мыши, чтобы не нажать невидимую кнопку с другого экрана
+        go_text = get_font(30).render("GAME OVER", True, "#b68f40") # текст game over
+        go_rect = go_text.get_rect(center=(150, 150))
 
-        GO_TEXT = get_font(30).render("GAME OVER", True, "#b68f40")
-        GO_RECT = GO_TEXT.get_rect(center=(150, 100))
-
-        AGAIN_BUTTON = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 200),
+        again_button = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 250),
                             text_input="Again", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-        TOMENU_BUTTON = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 300),
+        # кнопка again
+        tomenu_button = Button(image=pygame.image.load("assets/lil Rect.png"), pos=(150, 350),
                             text_input="Menu", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-
-        SCREEN.blit(GO_TEXT, GO_RECT)
+        # кнопка menu
+        screen.blit(go_text, go_rect)
         tb = tab()
-        SCREEN.blit(get_font(20).render('HIGHSCORE', True, "#b68f40"),
+        screen.blit(get_font(20).render('HIGHSCORE', True, "#b68f40"),
                     get_font(20).render('HIGHSCORE', True, "#b68f40").get_rect(center=(480, 30)))
+        # надпись highscore
         for i in range(len(tb)):
-            SCREEN.blit(get_font(20).render(tb[i], True, "#b68f40"),
-                        get_font(20).render(tb[i], True, "#b68f40").get_rect(center=(480, 70 + i * 40)))
-        for button in [AGAIN_BUTTON, TOMENU_BUTTON]:
-            button.changeColor(GO_POS)
-            button.update(SCREEN)
-
+            # выводятся 10 наилучщих рекордов
+            screen.blit(get_font(20).render(tb[i], True, "#b68f40"),
+                        get_font(20).render(tb[i], True, "#b68f40").get_rect(center=(460, 70 + i * 40)))
+        for button in [again_button, tomenu_button]:
+            button.update(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if AGAIN_BUTTON.checkForInput(GO_POS):
+                if again_button.checkForInput(go_pos): # при нажатии на again игра начинается с начала
                     play()
-                if TOMENU_BUTTON.checkForInput(GO_POS):
+                if tomenu_button.checkForInput(go_pos): # при нажатии на menu игрок возвращается в главное меню
                     main_menu()
 
         pygame.display.update()
 
-def main_menu():
+def main_menu(): # экран главного меню
     while True:
-        SCREEN.blit(BG, (0, 0))
-
-        MENU_MOUSE_POS = pygame.mouse.get_pos()
-
-        MENU_TEXT = get_font(60).render("ARKANOID", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(320, 100))
-
-        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 220),
+        screen.blit(bg, (0, 0))
+        menu_pos = pygame.mouse.get_pos()
+        menu_text = get_font(60).render("ARKANOID", True, "#b68f40") # заглавный текст
+        menu_rect = menu_text.get_rect(center=(320, 100))
+        play_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 220),
                             text_input="PLAY", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 370),
+        # кнопка play
+        quit_button = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(320, 370),
                             text_input="QUIT", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-
-        SCREEN.blit(MENU_TEXT, MENU_RECT)
-
-        for button in [PLAY_BUTTON, QUIT_BUTTON]:
-            button.changeColor(MENU_MOUSE_POS)
-            button.update(SCREEN)
-        
+        # кнопка quit
+        screen.blit(menu_text, menu_rect)
+        for button in [play_button, quit_button]:
+            button.update(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                if play_button.checkForInput(menu_pos): # при нажатии на play начинается игра
                     play()
-                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                if quit_button.checkForInput(menu_pos): # при нажаьтии на quit, программа завершается
                     pygame.quit()
                     sys.exit()
-
         pygame.display.update()
 
 main_menu()
