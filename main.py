@@ -91,7 +91,7 @@ class Platphorm(pygame.sprite.Sprite):
         self.image = platphorm_image
         self.add(main_group)
         self.add(bouncy)
-        self.rect = self.image.get_rect().move(WIDTH / 2 - 100, (8 * HEIGHT) / 10)
+        self.rect = self.image.get_rect().move(WIDTH / 2 - 100, (8 * HEIGHT) / 10 - 10)
         self.vx = 0
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -283,9 +283,9 @@ def level(num):
 class Gui(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(ui, all_sprites)
-        self.x_pos = 320
-        self.y_pos = 240
-        self.font = pygame.font.Font("assets/font.ttf", 60)
+        self.x_pos = 40
+        self.y_pos = 460
+        self.font = pygame.font.Font("assets/font.ttf", 30)
         self.base_color, self.hovering_color = (255, 255, 255), (0, 0, 0)
         self.text_input = str(score)
         self.text = self.font.render(self.text_input, True, self.base_color)
@@ -346,7 +346,7 @@ def begin():
 
 
 def play():
-    global score
+    global score, screen
     global started, lives, running, lvl, mball, a, plat, first
     pygame.init()
     while running:
@@ -415,10 +415,10 @@ def play():
             lvl = 1
             level(lvl)
             first = True
-        ui.update()
-        ui.draw(screen)
         main_group.update()
         main_group.draw(screen)
+        ui.update()
+        ui.draw(screen)
         pygame.display.flip()
         screen.fill((0, 0, 0))
     pygame.quit()
