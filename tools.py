@@ -17,6 +17,6 @@ def terminate(): # функция аварийного завершения
     sys.exit()
 
 def writescore(n):  # функция записи счета для таблицы рекордов
-    f = open('data/score.txt', 'a')  # в файле score.txt записаны все итоги игры
+    f = open('data/levels/score.txt', 'a')  # в файле score.txt записаны все итоги игры
     print(str(datetime.datetime.now().date()))  # дата игры
     f.write('\n' + str(datetime.datetime.now().date()) + ': ' + str(n))  # и финальный счет
