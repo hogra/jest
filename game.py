@@ -273,7 +273,7 @@ class Gui(pygame.sprite.Sprite):  # класс интерфейса
         super().__init__(ui, all_sprites)
         self.x_pos = 40
         self.y_pos = 460
-        self.font = pygame.font.Font("assets/font.ttf", 30)
+        self.font = pygame.font.Font("data/font.ttf", 30)
         self.base_color, self.hovering_color = (255, 255, 255), (0, 0, 0)
         self.text_input = str(score)
         self.text = self.font.render(self.text_input, True, self.base_color)

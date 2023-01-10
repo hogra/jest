@@ -23,7 +23,7 @@ click = pygame.mixer.Sound("data/sounds/click.wav")  # звук при нажа�
 
 
 def get_font(size):  # функция берет нужный шрифт (он всего один) и нужный размер
-    return pygame.font.Font("assets/font.ttf", size)
+    return pygame.font.Font("data/font.ttf", size)
 
 
 def play():  # функция запускает игру
