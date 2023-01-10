@@ -4,6 +4,7 @@ from button import Button
 import game
 from tools import load_image
 
+
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
@@ -11,7 +12,15 @@ pygame.display.set_caption("ARKANOID") # когда игрок открывае�
 
 bg = load_image('sprites/Background.png')
 # изначально я хотел поставить на фон всей игры картинку космоса, но он сильно отвлекал от игры и я закрасил его в черный
-dif = 1
+dif = 1 # сложность, по умолчанию - обычная
+
+ons = pygame.mixer.Sound("data/sounds/one.mp3")
+# звук при выборе легкой сложности (ты послужил вдохновением для контроля рождаемости)
+tws = pygame.mixer.Sound("data/sounds/two.mp3") # звук при выборе обычной сложности (получи)
+ths = pygame.mixer.Sound("data/sounds/three.mp3") # звук при выборе тяжелой сложности (слава королю)
+click = pygame.mixer.Sound("data/sounds/click.wav") # звук при нажатии на кнопку
+
+
 
 
 def get_font(size): # функция берет нужный шрифт (он всего один) и нужный размер
@@ -62,8 +71,10 @@ def gameover(): # экран game over
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if again_button.checkForInput(go_pos): # при нажатии на again игра начинается с начала
+                    pygame.mixer.Sound.play(click)
                     play()
                 if tomenu_button.checkForInput(go_pos): # при нажатии на menu игрок возвращается в главное меню
+                    pygame.mixer.Sound.play(click)
                     main_menu()
 
         pygame.display.update()
@@ -87,28 +98,45 @@ def main_menu(): # экран главного меню
         screen.blit(dif_text, dif_rect)
         one = Button(image=load_image("sprites/one.png"), pos=(260, 450),
                             text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        # иконка обычного думгая (простая сложность)
         two = Button(image=load_image("sprites/two.png"), pos=(320, 450),
                             text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        # иконка улыбающегося думгая (обычная сложность)
         three = Button(image=load_image("sprites/three.png"), pos=(380, 450),
                             text_input="", font=get_font(1), base_color="#d7fcd4", hovering_color="White")
+        # иконка побитого думгая (тяжелая сложность)
         for button in [play_button, quit_button, one, two, three]:
             button.update(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.mixer.Sound.play(click)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button.checkForInput(menu_pos): # при нажатии на play начинается игра
+                    pygame.mixer.Sound.play(click)
                     play()
                 if quit_button.checkForInput(menu_pos): # при нажаьтии на quit, программа завершается
+                    pygame.mixer.Sound.play(click)
                     pygame.quit()
                     sys.exit()
                 if one.checkForInput(menu_pos):
+                    pygame.mixer.Sound.play(click)
+                    pygame.mixer.Sound.play(ons)
                     dif = 0.75
+                    # при выборе легкого уровня, скорость мячика увеличена в 0.75 раз, игрок получает в 1.5 раза
+                    # меньше очков и в 1.5 раза больше их теряет
                 if two.checkForInput(menu_pos):
+                    pygame.mixer.Sound.play(click)
+                    pygame.mixer.Sound.play(tws)
                     dif = 1
+                    # при выборе обычного уровня, все по стандарту
                 if three.checkForInput(menu_pos):
+                    pygame.mixer.Sound.play(click)
+                    pygame.mixer.Sound.play(ths)
                     dif = 1.5
+                    # при выборе тяжелого уровня, скорость мячика увеличена в 1.5 раза, игрок получает в 1.5 раза
+                    # больше очков и в 1.5 раза меньше их теряет
         pygame.display.update()
 
 main_menu()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="просортировал файлы">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="добавил уровни сложности">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/score.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
@@ -264,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673362901762</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="добавил уровни сложности">
+      <created>1673365430230</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1673365430230</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -293,6 +300,7 @@
     <MESSAGE value="прокомментировал код" />
     <MESSAGE value="разделил программу на модули" />
     <MESSAGE value="просортировал файлы" />
-    <option name="LAST_COMMIT_MESSAGE" value="просортировал файлы" />
+    <MESSAGE value="добавил уровни сложности" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавил уровни сложности" />
   </component>
 </project>

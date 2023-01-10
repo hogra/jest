@@ -12,6 +12,11 @@ font = pygame.font.SysFont('Consolas', 30)
 ball_image = load_image('sprites/s_ball.png')
 platphorm_image = load_image('sprites/s_platphorm.png')
 
+bonk = pygame.mixer.Sound("data/sounds/bonk.mp3") # звук при попадании по кирпичу
+br = pygame.mixer.Sound("data/sounds/break.mp3") # звук пр иразрушении кирпича
+pop = pygame.mixer.Sound("data/sounds/pop.mp3") # звук при отскоке мяча от платформы
+leave = pygame.mixer.Sound("data/sounds/leave.mp3") # звук при падении мяча
+
 
 class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
     def __init__(self):
@@ -29,6 +34,7 @@ class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
     def update(self):
         global started, lives, score
         if pygame.sprite.collide_rect(self, death):  # если падает вниз,
+            pygame.mixer.Sound.play(leave)
             if score >= 500 // difficulty:
                 score -= int(500 // difficulty)  # игрок теряет 500 очков
             self.pos()  # мячик возвращается в начальную позицию
@@ -40,6 +46,7 @@ class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
         if pygame.sprite.spritecollideany(self, vertical_borders):
             self.vx = -self.vx  # если с вертикальной, соответственно, по x
         if pygame.sprite.collide_mask(self, plat):  # если сталкивается с платформой
+            pygame.mixer.Sound.play(pop)
             if score >= 10 // difficulty:
                 score -= int(10 // difficulty)  # игрок теряет 10 очков
             print('Plat ' + str(pygame.sprite.collide_mask(self, plat)))
@@ -131,6 +138,7 @@ class Brick(pygame.sprite.Sprite):  # класс кирпичей
     def update(self):
         global score
         if pygame.sprite.collide_mask(self, mball):  # если кирпич сталкивается с мячом
+            pygame.mixer.Sound.play(bonk)
             print('Brick ' + str(pygame.sprite.collide_mask(self, mball)))
             if pygame.sprite.collide_mask(mball, self)[0] == 0 or pygame.sprite.collide_mask(mball, self)[0] == 0:
                 # если мяч прилетел в угол кирпича, он (мяч) начинает лететь в противоположную сторону
@@ -150,6 +158,7 @@ class Brick(pygame.sprite.Sprite):  # класс кирпичей
             score += int(100 * difficulty)  # игрок получает 100 очков
             self.sprite()  # и кирпич меняет спрайт
         if self.lives <= 0:  # если же жизней не осталось
+            pygame.mixer.Sound.play(br)
             mball.count -= 1  # мяч получает один кирпич в свой счет
             score += int(100 * difficulty)  # игрок получает дополнительно 100 очков
             self.kill()  # кирпич уничтожется
