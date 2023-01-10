@@ -1,7 +1,8 @@
+import datetime
 import os
 import sys
+
 import pygame
-import datetime
 
 
 def load_image(name, colorkey=None):  # функция загрузки изображения спрайта
@@ -12,9 +13,11 @@ def load_image(name, colorkey=None):  # функция загрузки изоб
     image = pygame.image.load(fullname)
     return image
 
-def terminate(): # функция аварийного завершения
+
+def terminate():  # функция аварийного завершения
     pygame.quit()
     sys.exit()
+
 
 def writescore(n):  # функция записи счета для таблицы рекордов
     f = open('data/levels/score.txt', 'a')  # в файле score.txt записаны все итоги игры

@@ -12,10 +12,10 @@ font = pygame.font.SysFont('Consolas', 30)
 ball_image = load_image('sprites/s_ball.png')
 platphorm_image = load_image('sprites/s_platphorm.png')
 
-bonk = pygame.mixer.Sound("data/sounds/bonk.mp3") # звук при попадании по кирпичу
-br = pygame.mixer.Sound("data/sounds/break.mp3") # звук пр иразрушении кирпича
-pop = pygame.mixer.Sound("data/sounds/pop.mp3") # звук при отскоке мяча от платформы
-leave = pygame.mixer.Sound("data/sounds/leave.mp3") # звук при падении мяча
+bonk = pygame.mixer.Sound("data/sounds/bonk.mp3")  # звук при попадании по кирпичу
+br = pygame.mixer.Sound("data/sounds/break.mp3")  # звук пр иразрушении кирпича
+pop = pygame.mixer.Sound("data/sounds/pop.mp3")  # звук при отскоке мяча от платформы
+leave = pygame.mixer.Sound("data/sounds/leave.mp3")  # звук при падении мяча
 
 
 class Ball(pygame.sprite.Sprite):  # класс мячика (очевидно)
@@ -295,9 +295,6 @@ class Gui(pygame.sprite.Sprite):  # класс интерфейса
         screen.blit(self.lind, self.lind_rect)
 
 
-
-
-
 all_sprites = pygame.sprite.Group()  # все спрайты
 main_group = pygame.sprite.Group()  # главные спрайты - шарик и платформа
 horizontal_borders = pygame.sprite.Group()  # стенки
@@ -328,7 +325,7 @@ level(lvl)  # загшрузка уровня
 first = True  # флаг указывает, что это первая игра
 
 
-def play(k): # собственно вся игра
+def play(k):  # собственно вся игра
     global score, screen, difficulty
     global started, lives, running, lvl, mball, plat, first
     difficulty = k
