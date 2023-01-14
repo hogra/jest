@@ -4,7 +4,7 @@ import pygame
 
 import game
 from button import Button
-from tools import load_image
+from tools import load_image, terminate
 
 pygame.init()
 
@@ -140,7 +140,11 @@ def main_menu():  # экран главного меню
                     dif = 1.5
                     # при выборе тяжелого уровня, скорость мячика увеличена в 1.5 раза, игрок получает в 1.5 раза
                     # больше очков и в 1.5 раза меньше их теряет
-            pygame.display.update()
+            try:
+                pygame.display.update()
+            except pygame.error:
+                terminate()
+
 
 
 main_menu()
