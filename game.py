@@ -144,6 +144,7 @@ class Brick(pygame.sprite.Sprite):  # класс кирпичей
                 # если мяч прилетел в угол кирпича, он (мяч) начинает лететь в противоположную сторону
                 mball.vy = -mball.vy
                 mball.vx = -mball.vx
+                self.lives += 1
             elif pygame.sprite.collide_mask(mball, self)[0] > pygame.sprite.collide_mask(mball, self)[1]:
                 # если в горизонтальную часть кирпича - меняет скорость по y
                 mball.vy = -mball.vy
