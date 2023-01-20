@@ -410,3 +410,4 @@ def play(k):  # собственно вся игра
         pygame.display.flip()
         screen.fill((0, 0, 0))
     pygame.quit()
+

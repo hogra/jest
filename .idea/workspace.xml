@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="все сломал, потом починил">
+    <list default="true" id="a3e97c19-47f5-4383-846d-a346f28b45ac" name="Default Changelist" comment="экзешник собрал">
+      <change afterPath="$PROJECT_DIR$/dist/menu.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/menu.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/Analysis-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/PKG-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/PYZ-00.pyz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/PYZ-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/base_library.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/menu.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/menu.pkg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu/warn-menu.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu/warn-menu.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/levels/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/levels/score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673712550398</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="исправил одну ошибку, вместо того, чтобы добавить что-то полезное, т.к. мне лень работать">
+      <created>1673713158959</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1673713158959</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -359,6 +379,8 @@
     <MESSAGE value="почистил код" />
     <MESSAGE value="." />
     <MESSAGE value="все сломал, потом починил" />
-    <option name="LAST_COMMIT_MESSAGE" value="все сломал, потом починил" />
+    <MESSAGE value="исправил одну ошибку, вместо того, чтобы добавить что-то полезное, т.к. мне лень работать" />
+    <MESSAGE value="экзешник собрал" />
+    <option name="LAST_COMMIT_MESSAGE" value="экзешник собрал" />
   </component>
 </project>
